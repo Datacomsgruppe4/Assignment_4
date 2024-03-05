@@ -1,0 +1,12 @@
+# Intellij
+.idea/
+**.iml
+
+# VSCode
+.vscode/
+
+build/
+
+# Clangd
+.cache/
+compile_commands.json
