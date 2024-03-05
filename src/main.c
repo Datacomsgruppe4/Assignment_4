@@ -20,6 +20,4 @@ int main() {
       usart_transmit_str(hello_world, str_len);
       _delay_ms(200);
    }
-
-   return 0;
 }
