@@ -9,6 +9,7 @@
 
 #include "usart.h"
 
+
 int main() {
    usart_init(UBBR);
 
@@ -33,8 +34,20 @@ int main() {
 
    sscanf(user_input, "%hhu:%hhu:%hhu", &hour, &minute, &second);
 
-   char output[32] = {0};
-   sprintf(output, "Hour: %hhu\r\nMinute: %hhu\r\nSecond: %hhu\r\n", hour, minute, second);
+   for (;;) {
+      char output[32] = {0};
+      sprintf(output, "Hour: %hhu Minute: %hhu Second: %hhu\r\n", hour, minute, second);
 
-   usart_transmit_str(output, 32);
+      usart_transmit_str(output, 32);
+
+      second += 1;
+      minute += second / 60;
+      hour += minute / 60;
+
+      second %= 60;
+      minute %= 60;
+      hour %= 24;
+
+      _delay_ms(1000);
+   }
 }
