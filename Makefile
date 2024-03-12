@@ -60,6 +60,6 @@ flash: build/${HEX_FILE}
 	$(AVRDUDE) ${AVRDUDE_flags} -D -U flash:w:$<
 
 clean:
-	RMDIR build
+	${RMDIR} build
 
 .PHONY: all flash clean
