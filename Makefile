@@ -40,13 +40,6 @@ build/${PROG}: ${OBJ} | ${BUILD_DIR}
 ${BUILD_DIR}:
     mkdir -p ${BUILD_DIR}
 
-# build:
-# 	$(CC) ${CFLAGS} -c -o ${OBJ} ${SRC}
-# 	$(CC) ${CFLAGS} -c -o led.o led.c
-#
-# 	$(CC) ${CFLAGS} -o ${PROG}.elf led.o ${OBJ}
-# 	$(OBJCOPY) ${OBJCOPY_FLAGS} ${PROG}.elf ${HEX_FILE}
-
 flash: build/${HEX_FILE}
     $(AVRDUDE) ${AVRDUDE_flags} -D -U flash:w:$<
 
