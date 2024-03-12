@@ -1,29 +1,45 @@
+# OS specific part
+# -----------------
+ifeq ($(OS),Windows_NT)
+    RM = del /F /Q
+    RMDIR = -RMDIR /S /Q
+    MKDIR = -mkdir
+    ERRIGNORE = 2>NUL || (exit 0)
+    SEP=\\
+else
+    RM = rm -rf 
+    RMDIR = rm -rf 
+    MKDIR = mkdir -p
+    ERRIGNORE = 2>/dev/null
+    SEP=/
+endif
 
-PROG 				= 	Assignment_4
-SRC_DIR			=  src
-BUILD_DIR		= 	build
-HEADER_DIR		= 	include
+PROG                =   Assignment_4
+SRC_DIR             =   src
+BUILD_DIR           =   build
+HEADER_DIR          =   include
 
-SRC 				= 	$(wildcard ${SRC_DIR}/*.c)
+SRC                 =   $(wildcard ${SRC_DIR}/*.c)
 OBJ 				=	$(patsubst ${SRC_DIR}/%.c, ${BUILD_DIR}/%.o, ${SRC})
 HEX_FILE			= 	${PROG}.hex
 
-PORT 	  	     ?= 	/dev/ttyACM0
-MMCU 				= 	atmega2560
+PORT               ?=   /dev/ttyACM0
+MMCU                = 	atmega2560
 
 # Compiler- and -flags
-CC 				= 	avr-gcc
-CFLAGS 			= 	-mmcu=${MMCU} -Os -Wall -Wextra
-CPPFLAGS 		=	-I${HEADER_DIR}	
-LDFLAGS 			=	
+CC                  =   avr-gcc
+CFLAGS              =   -mmcu=${MMCU} -Os -Wall -Wextra
+CPPFLAGS            =   -I${HEADER_DIR}	
+LDFLAGS             =   
 
 # Objcopy- and -flags
-OBJCOPY 			= 	avr-objcopy
-OBJCOPY_FLAGS 	= 	-O ihex -R .eeprom
+OBJCOPY             =   avr-objcopy
+OBJCOPY_FLAGS       =   -O ihex -R .eeprom
 
 # Avrdude- and -flags
-AVRDUDE 			= 	avrdude
-AVRDUDE_flags 	= 	-p m2560 -c stk500v2 -P ${PORT} -b 115200 #-C /etc/avrdude/avrdude.conf
+AVRDUDE             =   avrdude
+AVRDUDE_flags       =   -p m2560 -c stk500v2 -P ${PORT} -b 115200 #-C /etc/avrdude/avrdude.conf # TODO: check OS and include the correct path on Windows
+
 
 
 all: build/${HEX_FILE}
@@ -40,17 +56,10 @@ build/${PROG}: ${OBJ} | ${BUILD_DIR}
 ${BUILD_DIR}:
 	mkdir -p ${BUILD_DIR}
 
-# build:
-# 	$(CC) ${CFLAGS} -c -o ${OBJ} ${SRC}
-# 	$(CC) ${CFLAGS} -c -o led.o led.c
-#
-# 	$(CC) ${CFLAGS} -o ${PROG}.elf led.o ${OBJ}
-# 	$(OBJCOPY) ${OBJCOPY_FLAGS} ${PROG}.elf ${HEX_FILE}
-
 flash: build/${HEX_FILE}
-	$(AVRDUDE) ${AVRDUDE_flags} -D -U flash:w:$< 
+	$(AVRDUDE) ${AVRDUDE_flags} -D -U flash:w:$<
 
 clean:
-	rm -rf build
+	RMDIR build
 
 .PHONY: all flash clean
