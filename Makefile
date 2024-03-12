@@ -44,21 +44,21 @@ AVRDUDE_flags       =   -p m2560 -c stk500v2 -P ${PORT} -b 115200 #-C /etc/avrdu
 all: build/${HEX_FILE}
 
 build/%.o: ${SRC_DIR}/%.c | ${BUILD_DIR}
-    $(CC) ${CFLAGS} ${CPPFLAGS} -c $< -o $@
+	$(CC) ${CFLAGS} ${CPPFLAGS} -c $< -o $@
 
 build/%.hex: build/${PROG}
-    $(OBJCOPY) ${OBJCOPY_FLAGS} $< $@
+	$(OBJCOPY) ${OBJCOPY_FLAGS} $< $@
 
 build/${PROG}: ${OBJ} | ${BUILD_DIR}
-    $(CC) ${CFLAGS} ${LDFLAGS} -o $@ ${OBJ}
+	$(CC) ${CFLAGS} ${LDFLAGS} -o $@ ${OBJ}
 
 ${BUILD_DIR}:
-    mkdir -p ${BUILD_DIR}
+	mkdir -p ${BUILD_DIR}
 
 flash: build/${HEX_FILE}
-    $(AVRDUDE) ${AVRDUDE_flags} -D -U flash:w:$<
+	$(AVRDUDE) ${AVRDUDE_flags} -D -U flash:w:$<
 
 clean:
-    RMDIR build
+	RMDIR build
 
 .PHONY: all flash clean
