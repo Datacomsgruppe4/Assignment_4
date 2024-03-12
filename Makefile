@@ -1,3 +1,18 @@
+# OS specific part
+# -----------------
+ifeq ($(OS),Windows_NT)
+    RM = del /F /Q
+    RMDIR = -RMDIR /S /Q
+    MKDIR = -mkdir
+    ERRIGNORE = 2>NUL || (exit 0)
+    SEP=\\
+else
+    RM = rm -rf 
+    RMDIR = rm -rf 
+    MKDIR = mkdir -p
+    ERRIGNORE = 2>/dev/null
+    SEP=/
+endif
 
 PROG                =   Assignment_4
 SRC_DIR             =   src
