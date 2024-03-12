@@ -23,7 +23,7 @@ OBJCOPY_FLAGS       =   -O ihex -R .eeprom
 
 # Avrdude- and -flags
 AVRDUDE             =   avrdude
-AVRDUDE_flags       =   -p m2560 -c stk500v2 -P ${PORT} -b 115200 -C /etc/avrdude/avrdude.conf
+AVRDUDE_flags       =   -p m2560 -c stk500v2 -P ${PORT} -b 115200 #-C /etc/avrdude/avrdude.conf # TODO: check OS and include the correct path on Windows
 
 
 all: build/${HEX_FILE}
