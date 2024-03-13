@@ -41,7 +41,17 @@ usart_transmit(uint8_t data) {
 }
 
 void
-usart_transmit_str(char str[], int str_len) {
+usart_transmit_str(char *str) {
+   char str_chr;
+   while ( (str_chr = *str) != '\0') {
+      usart_transmit(str_chr);
+
+      str++;
+   }
+}
+
+void
+usart_transmit_str_secure(char str[], int str_len) {
 
    for (int i = 0; i < str_len; i++) {
       usart_transmit(str[i]);
