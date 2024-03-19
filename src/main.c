@@ -14,11 +14,10 @@ int main() {
    usart_init(UBBR);
 
    char send_something[] = "Enter timestamp ([hh]:[mm]:[ss]): ";
-   int str_len = sizeof(send_something) / sizeof(send_something[0]);
 
    uint8_t hour, minute, second;
 
-   usart_transmit_str(send_something, str_len);
+   usart_transmit_str(send_something);
 
    char user_input[32] = {0};
 
@@ -30,7 +29,7 @@ int main() {
 
       if (chr == '\r') break;
    }
-   usart_transmit_str("\r\n", 2);
+   usart_transmit_str("\r\n");
 
    sscanf(user_input, "%hhu:%hhu:%hhu", &hour, &minute, &second);
 
@@ -38,7 +37,7 @@ int main() {
       char output[32] = {0};
       sprintf(output, "Hour: %hhu Minute: %hhu Second: %hhu\r\n", hour, minute, second);
 
-      usart_transmit_str(output, 32);
+      usart_transmit_str(output);
 
       second += 1;
       minute += second / 60;
