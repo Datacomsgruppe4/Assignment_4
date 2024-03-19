@@ -20,8 +20,8 @@ BUILD_DIR           =   build
 HEADER_DIR          =   include
 
 SRC                 =   $(wildcard ${SRC_DIR}/*.c)
-OBJ 				=	$(patsubst ${SRC_DIR}/%.c, ${BUILD_DIR}/%.o, ${SRC})
-HEX_FILE			= 	${PROG}.hex
+OBJ                 =   $(patsubst ${SRC_DIR}/%.c, ${BUILD_DIR}/%.o, ${SRC})
+HEX_FILE            =   ${PROG}.hex
 
 PORT               ?=   /dev/ttyACM0
 MMCU                = 	atmega2560
