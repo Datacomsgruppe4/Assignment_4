@@ -54,7 +54,7 @@ build/${PROG}: ${OBJ} | ${BUILD_DIR}
 	$(CC) ${CFLAGS} ${LDFLAGS} -o $@ ${OBJ}
 
 ${BUILD_DIR}:
-	mkdir -p ${BUILD_DIR}
+	${MKDIR} ${BUILD_DIR}
 
 flash: build/${HEX_FILE}
 	$(AVRDUDE) ${AVRDUDE_flags} -D -U flash:w:$<
